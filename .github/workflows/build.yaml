@@ -34,3 +34,12 @@ jobs:
         with:
           name: minimizeFocusedWorkspaceGalzeWM-Windows
           path: dist/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            dist/minimizeglazewm.exe
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
