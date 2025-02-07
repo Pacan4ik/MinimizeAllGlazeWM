@@ -3,8 +3,10 @@ name: Build Python Package with PyInstaller
 on:
   push:
     branches:
-      - main  # Запускать сборку при пуше в ветку main
-
+      - main
+  release:
+    types:
+      - created
 jobs:
   build:
     runs-on: windows-latest
@@ -34,25 +36,19 @@ jobs:
           name: minimizeFocusedWorkspaceGalzeWM-Windows
           path: dist/
 
-      - name: Create Tag
-        id: create_tag
-        shell: pwsh
-        run: |
-          $TAG_NAME = "v1.0.${{ github.run_number }}"
-          echo "TAG_NAME=$TAG_NAME" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git tag $TAG_NAME
-          git push origin $TAG_NAME
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
         with:
-          tag_name: ${{ env.TAG_NAME }}  # Используем созданный тег
-          files: |
-            dist/minimizeglazewm.exe
-          generate_release_notes: true
+          name: minimizeFocusedWorkspaceGalzeWM-Windows
+          path: dist/
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/minimizeglazewm.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
