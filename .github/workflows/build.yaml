@@ -36,9 +36,10 @@ jobs:
 
       - name: Create Tag
         id: create_tag
+        shell: pwsh  # Используем PowerShell
         run: |
-          TAG_NAME="v1.0.${{ github.run_number }}"
-          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+          $TAG_NAME = "v1.0.${{ github.run_number }}"
+          echo "TAG_NAME=$TAG_NAME" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           git tag $TAG_NAME
           git push origin $TAG_NAME
 
