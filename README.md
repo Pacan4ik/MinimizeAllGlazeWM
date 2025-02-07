@@ -19,5 +19,5 @@ This script allows you to quickly minimize all windows on the current workspace 
    ```(yaml)  
    # Minimize all windows on current workspace
    - commands: ['shell-exec ...yourpath\minimizeglazewm.exe']
-     bindings: ['f13+rshift'] # Your shorcuts
+     bindings: ['f13+rshift'] # Your shortcuts
    ```
