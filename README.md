@@ -8,7 +8,7 @@ Python script to minimize all displayed windows on the focused workspace in [Gla
 This script allows you to quickly minimize all windows on the current workspace in GlazeWM. It can be useful for clearing your desktop or switching between tasks efficiently.
 
 ## Usage
-1. Build *exe* (or just see packages):
+1. Build *exe* (or just see [releases](https://github.com/Pacan4ik/MinimizeAllGlazeWM/releases)):
 
    ```(shell)
    pyinstaller --onefile --noconsole --name=minimizeglazewm main.py
